@@ -27,11 +27,11 @@ region = Rect2( 128, 0, 32, 32 )
 animations = [ {
 "frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
 "loop": false,
-"name": "default",
+"name": "Animate",
 "speed": 10.0
 } ]
 
 [node name="GrassEffect" type="AnimatedSprite"]
 frames = SubResource( 6 )
-frame = 4
+animation = "Animate"
 script = ExtResource( 2 )
