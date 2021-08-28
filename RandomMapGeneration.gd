@@ -97,7 +97,7 @@ func _create_random_path():
 				walkers[i].pos.y + walkers[i].dir.y < height):
 					walkers[i].pos += walkers[i].dir
 					
-					print(grid[walkers[i].pos.x][walkers[i].pos.y])
+					
 					if grid[walkers[i].pos.x][walkers[i].pos.y] == Tiles.empty:
 						grid[walkers[i].pos.x][walkers[i].pos.y] = Tiles.floor
 						n_tiles += 1
