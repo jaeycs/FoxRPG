@@ -1,20 +1,18 @@
 extends Node2D
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 onready var dirtTile = $DirtPathTileMap
 onready var cliffTile = $CliffTileMap
 
 var rng = RandomNumberGenerator.new()
 
-var CellSize = Vector2(16,16)
+var CellSize = Vector2(32,32)
 
+var screenSize = Vector2(640, 360)
+#var screenSize = Vector2(3200, 1800)
 
-
-var width = 320/CellSize.x
-var height = 180/CellSize.y
+var width = screenSize.x/CellSize.x
+var height = screenSize.y/CellSize.y
 # the world grid
 var grid = []
 # multiple 'walker'
@@ -34,11 +32,15 @@ var walker_direction_chance = 0.5
 var fill_percent = 0.3
 var walker_destroy_chance = 0.2
 
+# to compensate the different size of tiles (dirt, cliff) 16, 32
+var neighbors4 = [ [1, 0], [-1, 0], [0, 1], [0, -1]]
+var neighbors8 = [ [1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [-1, -1], [1, -1], [-1, 1]]
 
 var Tiles = {
 	"empty": -1,
 	"cliff": 0,
-	"floor": 1
+	"floor": 1,
+	"dirt" : 2
 }
 
 func _init_walkers():
@@ -67,6 +69,7 @@ func GetRandomDirection():
 	var direction = directions[rng.randi()%4]
 	return Vector2(direction[0], direction[1])
 	
+
 func _create_random_path():
 	var itr = 0
 	var n_tiles = 0
@@ -108,16 +111,98 @@ func _create_random_path():
 		itr += 1
 	#end while
 
+func _create_walls():
+	for x in width:
+		for y in height:
+			if grid[x][y] == Tiles.floor:
+				for neighbor in neighbors4:
+					if check_bounds(x, y, neighbor) && grid[x + neighbor[0]][y + neighbor[1]] == Tiles.empty:
+						grid[x + neighbor[0]][y + neighbor[1]] = Tiles.cliff
+
+func check_bounds(x, y, neighbor):
+	return x + neighbor[0] >= 0 && y + neighbor[1] >= 0 && y + neighbor[1] < height && x + neighbor[0] > width
+
+
+func _remove_singletons():
+	for x in width:
+		for y in height:
+			if grid[x][y] == Tiles.cliff:
+				var single = true
+				for neighbor in neighbors4:
+					if check_bounds(x, y, neighbor) && grid[x + neighbor[0]][y + neighbor[1]] != Tiles.floor:
+						single = false
+						break
+				if single:
+					grid[x][y] = Tiles.floor
+
+
+func _pad_dirt():
+	var visit_code = 11
+	var bfs = []
+	var visited = []
+	
+	for x in width:
+		visited.append([])
+		for y in height:
+			if grid[x][y] == Tiles.cliff:
+				bfs.append(Vector2(x,y))
+				visited[x].append(0)
+			else:
+				visited[x].append(visit_code)
+	
+	while !bfs.empty():
+		var position = bfs.pop_front()
+		for i in range(neighbors8.size()):
+			var next = Vector2(position.x + neighbors8[i][0], position.y + neighbors8[i][1])
+			if next.x >= 1 and next.x < width-1 and next.y >= 1 and next.y < height-1 and (visited[next.x][next.y] == visit_code):
+				visited[next.x][next.y] = visited[position.x][position.y] + 1
+				bfs.append(next)
+	
+	for x in width:
+		for y in height:
+			if x == 0 or y == 0 or x == width-1 or y == height-1:
+				continue
+			if grid[x][y] == Tiles.floor and visited[x][y] >= 2:
+				grid[x][y] = Tiles.dirt
+
+
+func _remove_diagonals(tile_index):
+	for x in width:
+		for y in height:
+			# Check if on edges
+			if x == 0 or y == 0 or x == width-1 or y == height-1:
+				continue
+				
+			# If not on edges, make sure all surrounding tiles are floor and this is wall
+			var position = Vector2(x, y);
+			if grid[position.x][position.y] == tile_index:
+				if (grid[position.x - 1][position.y] == Tiles.floor and grid[position.x + 1][position.y] == Tiles.floor and
+					grid[position.x][position.y - 1] == Tiles.floor and grid[position.x][position.y + 1] == Tiles.floor):
+					grid[position.x][position.y] = Tiles.floor
+
+				# Check if diagonal tile
+				if (grid[position.x - 1][position.y] == Tiles.floor and grid[position.x][position.y-1] == Tiles.floor and
+					grid[position.x - 1][position.y-1] == tile_index) or (grid[position.x + 1][position.y] == Tiles.floor and grid[position.x][position.y+1] == Tiles.floor and
+					grid[position.x + 1][position.y+1] == tile_index) or (grid[position.x + 1][position.y] == Tiles.floor and grid[position.x][position.y-1] == Tiles.floor and
+					grid[position.x + 1][position.y-1] == tile_index) or (grid[position.x - 1][position.y] == Tiles.floor and grid[position.x][position.y+1] == Tiles.floor and
+					grid[position.x - 1][position.y+1] == tile_index):
+					grid[position.x][position.y] = Tiles.floor
+
 func _spawn_tiles():
 	for x in width:
 		for y in height:
 			match grid[x][y]:
 				Tiles.empty:
-					pass
+					cliffTile.set_cellv(Vector2(x,y),0)
 				Tiles.floor:
-					dirtTile.set_cellv(Vector2(x,y), 0)
-				Tiles.cliff:
 					pass
+				Tiles.dirt:
+					dirtTile.set_cellv(Vector2(x*2,y*2), 0)
+					dirtTile.set_cellv(Vector2(x*2+1,y*2), 0)
+					dirtTile.set_cellv(Vector2(x*2,y*2+1), 0)
+					dirtTile.set_cellv(Vector2(x*2+1,y*2+1), 0)
+				Tiles.cliff:
+					cliffTile.set_cellv(Vector2(x,y),0)
 					
 	dirtTile.update_bitmask_region()
 	cliffTile.update_bitmask_region()
@@ -140,6 +225,10 @@ func _input(event):
 			_init_grid()
 			_clear_tilemaps()
 			_create_random_path()
+			_create_walls()
+			_remove_singletons()
+			_pad_dirt()
+			_remove_diagonals(Tiles.dirt)
 			_spawn_tiles()
 	
 
