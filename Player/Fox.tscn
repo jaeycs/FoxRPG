@@ -123,7 +123,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 1, 2, 3, 4, 5, 1 ]
+"values": [ 1, 2, 3, 4, 5, 0 ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -197,7 +197,7 @@ max_space = Vector2( 1, 1.1 )
 
 [sub_resource type="AnimationNodeStateMachine" id=10]
 states/Idle/node = SubResource( 16 )
-states/Idle/position = Vector2( 169.667, 55 )
+states/Idle/position = Vector2( 170.333, 54.5556 )
 states/Run/node = SubResource( 21 )
 states/Run/position = Vector2( 314.333, 54.3333 )
 transitions = [ "Idle", "Run", SubResource( 22 ), "Run", "Idle", SubResource( 23 ) ]
@@ -212,6 +212,7 @@ script = ExtResource( 2 )
 position = Vector2( 0, -9 )
 texture = ExtResource( 1 )
 hframes = 60
+frame = 18
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
@@ -232,5 +233,5 @@ tree_root = SubResource( 10 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 11 )
-parameters/Idle/blend_position = Vector2( 0, 0 )
-parameters/Run/blend_position = Vector2( 0, 0 )
+parameters/Idle/blend_position = Vector2( -0.00180507, 1.02052 )
+parameters/Run/blend_position = Vector2( 1.04212, 0 )
