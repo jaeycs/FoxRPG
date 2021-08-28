@@ -8,8 +8,9 @@ var rng = RandomNumberGenerator.new()
 
 var CellSize = Vector2(32,32)
 
-var screenSize = Vector2(640, 360)
-#var screenSize = Vector2(3200, 1800)
+
+var screenSize = Vector2(ProjectSettings.get_setting("display/window/size/width"), ProjectSettings.get_setting("display/window/size/height"))
+
 
 var width = screenSize.x/CellSize.x
 var height = screenSize.y/CellSize.y
@@ -216,7 +217,13 @@ func _clear_tilemaps():
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	print("                 [Screen Metrics]")
+	print("            Display size: ", OS.get_screen_size())
+	print("   Decorated Window size: ", OS.get_real_window_size())
+	print("             Window size: ", OS.get_window_size())
+	print("        Project Settings: Width=", ProjectSettings.get_setting("display/window/size/width"), " Height=", ProjectSettings.get_setting("display/window/size/height")) 
+	print("         OS Window width: ", OS.get_window_size().x)
+	print("        OS Window height: ", OS.get_window_size().y)
 
 func _input(event):
 	if Input.is_key_pressed(KEY_BACKSPACE):
