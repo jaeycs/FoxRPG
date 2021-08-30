@@ -14,14 +14,17 @@ enum {
 var state = MOVE
 var velocity = Vector2.ZERO
 var roll_vector = Vector2.DOWN
+var stats = PlayerStats
 
 onready var animationPlayer = $AnimationPlayer
 onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
 onready var swordHitBox = $SwordHitboxPivot/SwordHitBox
+onready var hurtBox = $HurtBox
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	stats.connect("no_health", self, "queue_free")
 	animationTree.active = true
 	swordHitBox.knockback_vector = roll_vector
 	print ("Have Fun!")
@@ -83,7 +86,10 @@ func move_state(delta):
 	if Input.is_action_just_pressed("Roll"):
 		state = ROLL
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _on_HurtBox_area_entered(area):
+	#if hurtBox.invincible == false:
+	#it's not being called again when monitorable is set to true $$ bat already entered the area
+	print("fox hurtbox area entered method")
+	stats.health -= 1
+	hurtBox.start_invincibility(0.5)
+	hurtBox.create_hit_effect()
