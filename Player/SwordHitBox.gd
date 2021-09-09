@@ -1,3 +1,3 @@
-extends "res://HitBoxes and HurtBoxes/HitBox.gd"
+extends "res://Overlap/HitBox.gd"
 
 var knockback_vector = Vector2.ZERO
