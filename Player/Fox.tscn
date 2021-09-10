@@ -10,7 +10,7 @@
 radius = 4.0
 height = 3.965
 
-[sub_resource type="Animation" id=47]
+[sub_resource type="Animation" id=2]
 resource_name = "AttackDown"
 length = 0.4
 tracks/0/type = "value"
@@ -64,7 +64,7 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=48]
+[sub_resource type="Animation" id=3]
 resource_name = "AttackLeft"
 length = 0.4
 tracks/0/type = "value"
@@ -118,7 +118,7 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=49]
+[sub_resource type="Animation" id=4]
 resource_name = "AttackRight"
 length = 0.4
 tracks/0/type = "value"
@@ -172,7 +172,7 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=50]
+[sub_resource type="Animation" id=5]
 resource_name = "AttackUp"
 length = 0.4
 tracks/0/type = "value"
@@ -226,7 +226,7 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=51]
+[sub_resource type="Animation" id=6]
 resource_name = "IdleDown"
 length = 0.1
 loop = true
@@ -243,7 +243,7 @@ tracks/0/keys = {
 "values": [ 18 ]
 }
 
-[sub_resource type="Animation" id=52]
+[sub_resource type="Animation" id=7]
 resource_name = "IdleLeft"
 length = 0.1
 loop = true
@@ -292,7 +292,7 @@ tracks/0/keys = {
 "values": [ 6 ]
 }
 
-[sub_resource type="Animation" id=53]
+[sub_resource type="Animation" id=10]
 resource_name = "RollDown"
 length = 0.5
 tracks/0/type = "value"
@@ -322,7 +322,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=54]
+[sub_resource type="Animation" id=11]
 resource_name = "RollLeft"
 length = 0.5
 tracks/0/type = "value"
@@ -352,7 +352,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=55]
+[sub_resource type="Animation" id=12]
 resource_name = "RollRight"
 length = 0.5
 tracks/0/type = "value"
@@ -382,7 +382,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=56]
+[sub_resource type="Animation" id=13]
 resource_name = "RollUp"
 length = 0.5
 tracks/0/type = "value"
@@ -412,7 +412,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=57]
+[sub_resource type="Animation" id=14]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -428,7 +428,7 @@ tracks/0/keys = {
 "values": [ 19, 20, 21, 22, 23, 18 ]
 }
 
-[sub_resource type="Animation" id=58]
+[sub_resource type="Animation" id=15]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -444,7 +444,7 @@ tracks/0/keys = {
 "values": [ 13, 14, 15, 16, 17, 12 ]
 }
 
-[sub_resource type="Animation" id=59]
+[sub_resource type="Animation" id=16]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -460,7 +460,7 @@ tracks/0/keys = {
 "values": [ 1, 2, 3, 4, 5, 0 ]
 }
 
-[sub_resource type="Animation" id=60]
+[sub_resource type="Animation" id=17]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -602,7 +602,7 @@ start_node = "Idle"
 radius = 12.0
 height = 8.0
 
-[sub_resource type="CapsuleShape2D" id=61]
+[sub_resource type="CapsuleShape2D" id=47]
 radius = 5.0
 height = 4.0
 
@@ -620,22 +620,22 @@ rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/AttackDown = SubResource( 47 )
-anims/AttackLeft = SubResource( 48 )
-anims/AttackRight = SubResource( 49 )
-anims/AttackUp = SubResource( 50 )
-anims/IdleDown = SubResource( 51 )
-anims/IdleLeft = SubResource( 52 )
+anims/AttackDown = SubResource( 2 )
+anims/AttackLeft = SubResource( 3 )
+anims/AttackRight = SubResource( 4 )
+anims/AttackUp = SubResource( 5 )
+anims/IdleDown = SubResource( 6 )
+anims/IdleLeft = SubResource( 7 )
 anims/IdleRight = SubResource( 8 )
 anims/IdleUp = SubResource( 9 )
-anims/RollDown = SubResource( 53 )
-anims/RollLeft = SubResource( 54 )
-anims/RollRight = SubResource( 55 )
-anims/RollUp = SubResource( 56 )
-anims/RunDown = SubResource( 57 )
-anims/RunLeft = SubResource( 58 )
-anims/RunRight = SubResource( 59 )
-anims/RunUp = SubResource( 60 )
+anims/RollDown = SubResource( 10 )
+anims/RollLeft = SubResource( 11 )
+anims/RollRight = SubResource( 12 )
+anims/RollUp = SubResource( 13 )
+anims/RunDown = SubResource( 14 )
+anims/RunLeft = SubResource( 15 )
+anims/RunRight = SubResource( 16 )
+anims/RunUp = SubResource( 17 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 44 )
@@ -667,7 +667,7 @@ collision_mask = 0
 
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2( 0, -4 )
-shape = SubResource( 61 )
+shape = SubResource( 47 )
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]
 

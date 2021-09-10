@@ -20,7 +20,6 @@ func set_invincible(value):
 
 func start_invincibility(duration):
 	self.invincible = true
-	print("invincible for " + str(duration))
 	timer.start(duration)
 
 func create_hit_effect():
@@ -31,13 +30,11 @@ func create_hit_effect():
 	effect.global_position = global_position - Vector2(0, 8)
 
 func _on_Timer_timeout():
-	print("timer timout")
 	self.invincible = false # adding self will call the setter. otherwise setter will not be called
 	#set_invincible(false)
 
 func _on_HurtBox_invincibility_ended():
-	print("invincibility ended")
-	monitorable = true
+	monitoring = true
 
 func _on_HurtBox_invincibility_started():
-	set_deferred("monitorable", false)
+	set_deferred("monitoring", false)

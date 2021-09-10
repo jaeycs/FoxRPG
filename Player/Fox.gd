@@ -24,6 +24,7 @@ onready var hurtBox = $HurtBox
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
 	stats.connect("no_health", self, "queue_free")
 	animationTree.active = true
 	swordHitBox.knockback_vector = roll_vector
@@ -89,7 +90,6 @@ func move_state(delta):
 func _on_HurtBox_area_entered(area):
 	#if hurtBox.invincible == false:
 	#it's not being called again when monitorable is set to true $$ bat already entered the area
-	print("fox hurtbox area entered method")
 	stats.health -= 1
 	hurtBox.start_invincibility(0.5)
 	hurtBox.create_hit_effect()
