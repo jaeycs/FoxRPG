@@ -23,7 +23,7 @@ onready var animationTree = $AnimationTree
 onready var animationState = animationTree.get("parameters/playback")
 onready var swordHitBox = $SwordHitboxPivot/SwordHitBox
 onready var hurtBox = $HurtBox
-onready var blinkAnimationPlayer = $BlinkAnimationPlyaer
+onready var blinkAnimationPlayer = $BlinkAnimationPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -102,7 +102,7 @@ func _on_HurtBox_area_entered(area):
 
 func _on_HurtBox_invincibility_started():
 	blinkAnimationPlayer.play("Blink")
-
+	
 
 func _on_HurtBox_invincibility_ended():
 	blinkAnimationPlayer.play("Stop")
