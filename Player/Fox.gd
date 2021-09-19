@@ -35,6 +35,8 @@ func _ready():
 
 func _physics_process(delta):
 #func _process(delta):
+	GlobalVariables.set("currentFox", self)
+			
 	match state:
 		MOVE:
 			move_state(delta)
