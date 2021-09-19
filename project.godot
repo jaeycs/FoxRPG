@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="Fox RPG"
-run/main_scene="res://World.tscn"
+run/main_scene="res://MainMenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
